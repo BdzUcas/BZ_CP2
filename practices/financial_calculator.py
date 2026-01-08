@@ -32,4 +32,10 @@
     #interest = number input (max 100)
     #years = number input
     #loop years * 12 times:
-        #get percent (number = amount, percent = interest)
+        #addition = get percent (number = amount, percent = interest)
+        #add addition to total
+    #display (after (years) years you would end with (total) dollars.)
+#budget function:
+    #create empty list called "categories"
+    #loop number input times
+    
