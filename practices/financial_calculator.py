@@ -54,22 +54,43 @@ def goalCalculator():
     else:
         #dipslay "It will take (time) months to save for your goal"
         print(f"It will take {time} months to save for your goal")
-goalCalculator()
 #compount interest function:
+def compountInterest():
     #amount = number input
+    print('How much are you starting with?')
+    amount = numInput()
     #interest = number input (max 100)
+    print('What is the interest rate?')
+    interest = numInput(max= 100)
     #years = number input
+    print('How many years will you leave it for?')
+    years = numInput()
     #loop years * 12 times:
+    for i in range(int(years * 12)):
         #addition = get percent (number = amount, percent = interest)
+        addition = getPercent(amount, interest)
         #add addition to total
+        amount += addition
     #display (after (years) years you would end with (total) dollars.)
+    print(f'After {years} years you would have ${round(amount,2)}')
 #budget function:
+def budget():
     #variable income = number input
+    print('What is your monthly income?')
+    income = numInput()
     #create empty dictionary called "categories"
+    categories = {}
     #loop number input times:
+    print('How many budget categories do you want?')
+    for i in range(int(numInput())):
         #create a new dictionary entry with the key being a user input and the value being a number input (max 100)
+        print(f'Category {i+1}:')
+        categories[uinput()] = numInput(prompt= 'What percentage of your budget is it?\n> ', max= 100)
     #loop through categories
+    for category, percent in categories:
         #display "(key): $(get percent (income, value))"
+        print(f'{category.upper()}: ${getPercent(income,percent)}')
+budget()
 #sales price function:
     #price = number input
     #discount = number input(max 100)
