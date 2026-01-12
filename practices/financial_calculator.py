@@ -54,8 +54,8 @@ def goalCalculator():
     else:
         #dipslay "It will take (time) months to save for your goal"
         print(f"It will take {time} months to save for your goal")
-#compount interest function:
-def compountInterest():
+#compound interest function:
+def compoundInterest():
     #amount = number input
     print('How much are you starting with?')
     amount = numInput()
@@ -92,37 +92,72 @@ def budget():
         print(f'{category.upper()}: ${getPercent(income,percent)}')
 budget()
 #sales price function:
+def salesPrice():
     #price = number input
+    print('What is the normal price?')
+    price = numInput()
     #discount = number input(max 100)
+    print('What percent do you have off?')
+    discount = numInput(max=100)
     #display "The item is now $(get percent (price, discount))"
+    print(f"The item is now ${price - getPercent(price,discount)}")
 #tip function:
+def tip():
     #bill = number input
+    print('What is the bill?')
+    bill = numInput()
     #tip = number input (max 100)
-    #tip = get percent (bill, tip)
-    #display "The tip is $(tip), the total is $(tip + bill))"
+    print('What percent tip are you giving?')
+    tip = numInput(max=100)
+    #tip_amount = get percent (bill, tip)
+    tip_amount = getPercent(bill, tip)
+    #display "The tip is $(tip_amount), the total is $(tip + bill))"
+    print(f"The tip is ${tip_amount}, and the total is ${tip_amount + bill}")
 #main function
+def main():
     #option input function (error (default "Please choose one of the options"), options)
+    def opInput(options,error="Please choose an option!"):
         #loop forever
+        while not False:
             #set "choice" variable to user input
+            choice = uinput()
             #if "choice" is in options:
+            if choice in options:
                 #return choice
+                return choice
             #otherwise:
+            else:
                 #display error message
+                print(error)
     #display "1. Goal Calculator
     #         2. Compound Interest Calculator
     #         3. Budget Calculator
     #         4. Sales Discount Calculator
-    #         5. Tip Calculator
+    #         5. Tip Calculator"
+    print("1. Goal Calculator\n2. Compound Interest Calculator\n3. Budget Calculator\n4. Sales Discount Calculator\n5. Tip Calculator")
     #choice = option input(options: 1, 2, 3, 4, 5)
+    choice = opInput(['1','2','3','4','5'])
     #if choice = 1:
+    if choice == '1':
         #Goal calculator function
+        goalCalculator()
     #if choice = 2
+    elif choice == '2':
         #Compound interest function
+        compoundInterest()
     #if choice = 3:
+    elif choice == '3':
         #budget function
+        budget()
     #if choice = 4:
+    elif choice == '4':
         #Sales price function
+        salesPrice()
     #if choice = 5:
+    elif choice == '5':
         #tip function
+        tip()
 #Forever:
+while not False:
     #main function
+    main()
