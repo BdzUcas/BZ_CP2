@@ -1,6 +1,6 @@
 #BZ 2nd Personal Library
 #Create set for books
-books = {}
+books = set({})
 #user input function
 def uInput(prompt = '> '):
     #take user input and clean it and return it
@@ -14,7 +14,7 @@ def bookInput():
     #display "Added (title) by (author)"
     print(f'Added {name.title()} by {author.title()}')
     #book = dictionary containing title: name and author: author
-    book = {'title': name,'author': author}
+    book = f'{name.title()} by {author.title()}'
     #return book
     return book
 #display books function
@@ -24,7 +24,7 @@ def bookDisplay(shelf):
     for book in shelf:
         i += 1
         #display "(current book title) by (current book author)"
-        print(f'{i}. {book['title'].title()} by {book['author'].title()}')
+        print(f'{i}. {book}')
 #search books function
 def search(shelf):
     #query = take user input "search"
@@ -34,11 +34,7 @@ def search(shelf):
     #loop over books
     for book in shelf:
         #if current book title contains query:
-        if query in book['title']:
-            #add current book to potential books
-            potential.append(book)
-        #else if current book author contains query:
-        elif query in book['author']:
+        if query in book.lower():
             #add current book to potential books
             potential.append(book)
     #return potential books
@@ -65,21 +61,42 @@ def select(options):
             continue
 #main function
 def main():
-    #display choices
-    print("1. Add\n2. View\n3. Remove\n4. Search")
-    #take user input for one of the choices
-    choice = uInput()
-    #if choice is add
-        #add (book input) to books
-    #otherwise if choice is view
-        #display books
-    #otherwise if choice is remove
-        #book search
-        #chosen = book select
-        #if chosen is empty:
-            #return to top of function
-        #remove (chosen) from books
-    #otherwise if choice is search
-        #book search
-        #display books
-    #return to top of function
+    while True:
+        #display choices
+        print("1. Add\n2. View\n3. Remove\n4. Search")
+        #take user input for one of the choices
+        while True:
+            choice = uInput()
+            if choice in ['1','add','2','view','3','remove','4','search']:
+                break
+            else:
+                print('Please select one of the choices!')
+        #if choice is add
+        if choice in ['1','add']:
+            #add (book input) to books
+            books.add(bookInput())
+        #otherwise if choice is view
+        elif choice in ['2','view']:
+            #display books
+            bookDisplay(books)
+        #otherwise if choice is remove
+        elif choice in ['3','remove']:
+            #book search
+            potential = search(books)
+            #chosen = book select
+            chosen = select(potential)
+            #if chosen is empty:
+            if chosen == False:
+                #return to top of function
+                continue
+            #remove (chosen) from books
+            books.remove(chosen)
+        #otherwise if choice is search
+        elif choice in ['4','search']:
+            #book search
+            searched = search(books)
+            #display books
+            bookDisplay(searched)
+        #return to top of function
+        
+main()
