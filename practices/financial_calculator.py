@@ -1,14 +1,14 @@
 #BZ 2nd Financial Calculiator
 #Number input function (prompt (default "> "), error (default "Please input a number!"), max (default 1000000000000000000000000000000000000000000))
 #user input function
-def uinput():
+def uinput(prompt = '> '):
     #take user input and clean it and return it
-    return input().strip()
+    return input(prompt).strip()
 def numInput(prompt = '> ', error = 'Please input a number!', max = 1000000000000000000000000000000000):
     #loop forever
     while not False:
         #set "num" variable to user input
-        num = uinput()
+        num = uinput(prompt)
         #if "num" is an integer:
         if num.replace('.','').isdigit():
             num = float(num)
@@ -82,15 +82,25 @@ def budget():
     categories = {}
     #loop number input times:
     print('How many budget categories do you want?')
+    perc_total = 0
     for i in range(int(numInput())):
         #create a new dictionary entry with the key being a user input and the value being a number input (max 100)
         print(f'Category {i+1}:')
-        categories[uinput()] = numInput(prompt= 'What percentage of your budget is it?\n> ', max= 100)
+        cat = uinput()
+        print('What percentage of your budget is it?')
+        while True:
+            perc = numInput(max= 100)
+            if perc_total + perc > 100:
+                print('That puts your percentage over 100! Input a different number.')
+            else:
+                break
+        perc_total += perc
+        categories[cat] = perc
     #loop through categories
-    for category, percent in categories:
+    for category in categories.keys():
         #display "(key): $(get percent (income, value))"
-        print(f'{category.upper()}: ${getPercent(income,percent)}')
-budget()
+        print(f'{category.capitalize()}: ${getPercent(income,categories[category])}')
+    print(f'You have ${getPercent(income,100-perc_total)} remaining.')
 #sales price function:
 def salesPrice():
     #price = number input
