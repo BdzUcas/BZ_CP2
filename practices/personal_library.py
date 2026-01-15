@@ -100,8 +100,11 @@ def main():
             searched = search(books)
             #display books
             bookDisplay(searched)
+        #otherwise if choice is exit
         elif choice in ['5','exit']:
+            #tell the user goodbye
             print('\033cGoodbye!')
+            #exit program
             return
         #return to top of function
         input('Press ENTER to Continue > ')
