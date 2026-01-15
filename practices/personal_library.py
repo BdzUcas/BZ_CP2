@@ -1,5 +1,6 @@
 #BZ 2nd Personal Library
 #Create set for books
+import time as t
 books = set({})
 #user input function
 def uInput(prompt = '> '):
@@ -63,11 +64,11 @@ def select(options):
 def main():
     while True:
         #display choices
-        print("1. Add\n2. View\n3. Remove\n4. Search")
+        print("1. Add\n2. View\n3. Remove\n4. Search\n5. Exit")
         #take user input for one of the choices
         while True:
             choice = uInput()
-            if choice in ['1','add','2','view','3','remove','4','search']:
+            if choice in ['1','add','2','view','3','remove','4','search','5','exit']:
                 break
             else:
                 print('Please select one of the choices!')
@@ -88,15 +89,21 @@ def main():
             #if chosen is empty:
             if chosen == False:
                 #return to top of function
+                print('\033c')
                 continue
             #remove (chosen) from books
             books.remove(chosen)
+            print(f'Removed {chosen}')
         #otherwise if choice is search
         elif choice in ['4','search']:
             #book search
             searched = search(books)
             #display books
             bookDisplay(searched)
+        elif choice in ['5','exit']:
+            print('\033cGoodbye!')
+            return
         #return to top of function
-        
+        input('Press ENTER to Continue > ')
+        print('\033c')
 main()
