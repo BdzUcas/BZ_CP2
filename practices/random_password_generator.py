@@ -103,7 +103,7 @@ while True:
     #run main function
     main()
     print('Press enter to continue or type exit to end')
-    choice = input.lower()
+    choice = input().lower()
     #if user wants to exit:
     match choice:
         case 'exit':
