@@ -57,6 +57,6 @@ def uniprint(to_print, indentation = ''):
                 print(f'{indentation}{key}:')
                 #uniprint value
                 uniprint(to_print[key],indentation + ' ')
-        
+
 movies = csv_to_dictionary('practices/movies.csv')
 uniprint(movies,'')
