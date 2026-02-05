@@ -57,6 +57,14 @@ def uniprint(to_print, indentation = ''):
                 print(f'{indentation}{key}:')
                 #uniprint value
                 uniprint(to_print[key],indentation + ' ')
-
+def check(condition,dictionary):
+    key, method, compare = condition.split(' ')
+    value = dictionary[key]
+    if method == 'has':
+        if compare in value:
+            return True
+        else:
+            return False
+    
 movies = csv_to_dictionary('practices/movies.csv')
-uniprint(movies,'')
+print(movies,'')
