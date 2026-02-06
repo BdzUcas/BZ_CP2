@@ -1,6 +1,5 @@
 #BZ 2nd Movie Recomender
 import csv as csv
-
 #CSV to dictionary function
 def csv_to_dictionary(file_path):
     #create empty list
@@ -58,13 +57,27 @@ def uniprint(to_print, indentation = ''):
                 #uniprint value
                 uniprint(to_print[key],indentation + ' ')
 def check(condition,dictionary):
-    key, method, compare = condition.split(' ')
+    key, method, compare = condition.split('|')
     value = dictionary[key]
     if method == 'has':
         if compare in value:
             return True
         else:
             return False
-    
+    elif method == '>':
+        try:
+            if value > compare:
+                return True
+        except:
+            pass
+        return False
+    elif method == '<':
+        try:
+            if value < compare:
+                return True
+        except:
+            pass
+        return False
 movies = csv_to_dictionary('practices/movies.csv')
 print(movies,'')
+print(check('Length (min)|<|130',movies[0]))
