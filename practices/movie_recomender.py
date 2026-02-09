@@ -56,28 +56,78 @@ def uniprint(to_print, indentation = ''):
                 print(f'{indentation}{key}:')
                 #uniprint value
                 uniprint(to_print[key],indentation + ' ')
+#check function
 def check(condition,dictionary):
+    #seperate values
     key, method, compare = condition.split('|')
+    #find value in dictionary with key provided
     value = dictionary[key]
+    #if it is comparing strings
     if method == 'has':
+        #check if it contains the compare value
         if compare in value:
+            #if so, return true
             return True
         else:
+            #otherwise return false
             return False
+    #else if it is comparing greater than
     elif method == '>':
         try:
+            #if the value is more than the compare
             if value > compare:
+                #return true
                 return True
         except:
             pass
+        #otherwise return false
         return False
+    #else if it is comparing less than
     elif method == '<':
         try:
+            #if the value is less than the compare
             if value < compare:
+                #return true
                 return True
         except:
             pass
+        #otherwise return false
         return False
+#movie print function
+def movie_print(movies):
+    iterator = 0
+    for i in movies:
+        uniprint(f'{iterator}: {i['Title']}')
+        iterator += 1
+    print('Type movie number for detailed view or 0 to exit')
+    chosen = input('> ')
+    if chosen >= iterator:
+        print('Invalid choice!')
+        return
+    if chosen == '0':
+        return
+    elif chosen < iterator:
+        uniprint(movies[int(chosen)])
+#search function
+def search():
+    pass
+#main menu function
+def menu():
+    #ask user what to do
+    print('MAIN MENU\n1. Search\n2. Show Movies\n3. Exit')
+    match input('> '):
+        #if they chose to search
+        case '1':
+            #search
+            search()
+        #if they chose to show full list
+        case '2':
+            #print out all movies
+            movie_print(movies)
+        #if they chose to exit
+        case '3':
+            #return true
+            return True
 movies = csv_to_dictionary('practices/movies.csv')
-print(movies,'')
-print(check('Length (min)|<|130',movies[0]))
+while True:
+    menu()
