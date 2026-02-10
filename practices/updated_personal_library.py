@@ -1,5 +1,5 @@
-#BZ 2nd Personal Library
-#Create set for books
+#BZ 1st Updated Personal Library
+import csv as csv
 import time as t
 books = []
 #user input function
@@ -60,6 +60,13 @@ def select(options):
             #ask again
             print('Please choose by number!')
             continue
+def save_books(shelf,save_to):
+    header = shelf[0].keys()
+    with open(save_to) as file:
+        writer = csv.dictwriter(file,header)
+        file.truncate(0)
+        writer.writeheader()
+        writer.writerows(shelf)
 #main function
 def main():
     while True:
@@ -75,7 +82,7 @@ def main():
         #if choice is add
         if choice in ['1','add']:
             #add (book input) to books
-            books.add(bookInput())
+            books.append(bookInput())
         #otherwise if choice is view
         elif choice in ['2','view']:
             #display books
@@ -104,6 +111,7 @@ def main():
         elif choice in ['5','exit']:
             #tell the user goodbye
             print('\033cGoodbye!')
+            save_books(books,'practices/shelf.csv')
             #exit program
             return
         #return to top of function
