@@ -1,11 +1,41 @@
 #BZ 1st Updated Personal Library
 import csv as csv
 import time as t
-books = []
+
+
+#CSV to dictionary function
+def csv_to_dictionary(file_path):
+    #create empty list
+    finished = []
+    #open csv file in read mode
+    with open(file_path, mode = 'r') as file:
+        #create csv reader
+        reader = csv.reader(file)
+        #get first line in reader
+        header = next(reader)
+        #loop through reader:
+        for line in reader:
+            #create empty dictionary
+            current_line = {}
+            #set iterator to 0
+            i = 0
+            #loop through first line:
+            for column in header:
+                #create new line in the dictionary with the first line value as the key and the respective line value as the value
+                if line:
+                    current_line[column] = line[i]
+                i += 1
+            #add dictionary to list
+            finished.append(current_line)
+        return finished
+    
+
 #user input function
 def uInput(prompt = '> '):
     #take user input and clean it and return it
     return input(prompt).strip().lower()
+
+
 #book input function
 def bookInput():
     #name = take user input "Title: "
@@ -15,9 +45,11 @@ def bookInput():
     #display "Added (title) by (author)"
     print(f'Added {name.title()} by {author.title()}')
     #book = dictionary containing title: name and author: author
-    book = f'{name.title()} by {author.title()}'
+    book = {'title': name.title(), 'author': author.title()}
     #return book
     return book
+
+
 #display books function
 def bookDisplay(shelf):
     #loop over books
@@ -25,7 +57,9 @@ def bookDisplay(shelf):
     for book in shelf:
         i += 1
         #display "(current book title) by (current book author)"
-        print(f'{i}. {book}')
+        print(f'{i}. {book['title']} by {book['author']}')
+
+
 #search books function
 def search(shelf):
     #query = take user input "search"
@@ -35,11 +69,13 @@ def search(shelf):
     #loop over books
     for book in shelf:
         #if current book title contains query:
-        if query in book.lower():
+        if query in book['title'].lower() or query in book['author'].lower():
             #add current book to potential books
             potential.append(book)
     #return potential books
     return potential
+
+
 #select book function
 def select(options):
     #display book options numbered
@@ -60,15 +96,26 @@ def select(options):
             #ask again
             print('Please choose by number!')
             continue
+
+
+#save books function
 def save_books(shelf,save_to):
+    #get header info
     header = shelf[0].keys()
-    with open(save_to) as file:
-        writer = csv.dictwriter(file,header)
-        file.truncate(0)
+    #open file
+    with open(save_to,'w',newline='') as file:
+        #create dict writer object
+        writer = csv.DictWriter(file,header)
+        #write header
         writer.writeheader()
+        #write all rows
         writer.writerows(shelf)
+
+
 #main function
 def main():
+    #import info from csv file
+    books = csv_to_dictionary('practices/shelf.csv')
     while True:
         #display choices
         print("1. Add\n2. View\n3. Remove\n4. Search\n5. Exit")
@@ -100,7 +147,7 @@ def main():
                 continue
             #remove (chosen) from books
             books.remove(chosen)
-            print(f'Removed {chosen}')
+            print(f'Removed {chosen['title']} by {chosen['author']}')
         #otherwise if choice is search
         elif choice in ['4','search']:
             #book search
@@ -117,4 +164,6 @@ def main():
         #return to top of function
         input('Press ENTER to Continue > ')
         print('\033c')
+
+
 main()
