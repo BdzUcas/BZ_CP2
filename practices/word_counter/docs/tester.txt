@@ -1,0 +1,5 @@
+This is a text file for testing my word counter project!
+
+It is pretty cool.
+
+You should blame Nathan if this doesn't work.
