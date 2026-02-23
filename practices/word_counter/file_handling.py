@@ -9,6 +9,8 @@ def retrieve_txt(file_path):
         #read and return txt file
         content = file.read()
         return content
+    
+
 #get last update function
 def get_last_update(file_path):
     #get updates dictionary
@@ -21,6 +23,8 @@ def get_last_update(file_path):
     except:
         #return "Never"
         return 'Never'
+    
+
 #write to txt file function
 def txt_append(file_path,add):
     #open txt file
@@ -29,6 +33,8 @@ def txt_append(file_path,add):
         file.write(add)
         #write newline to the txt file
         file.write('\n')
+
+
 #function to check for if file exists
 def check_file_path(file_path):
     #try opening the file
@@ -45,6 +51,8 @@ def check_file_path(file_path):
         #say what error it its
         print(f'An unexpected error occured: {error}')
         return False
+    
+    
 #word counter function
 def count_words(content):
     #split the given string by spaces and new lines

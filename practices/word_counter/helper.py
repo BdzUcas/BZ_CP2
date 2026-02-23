@@ -15,6 +15,8 @@ def read_dict_csv(file_path):
             finished[line[0]] = line[1]
         #return dictionary
         return finished
+    
+    
 #input from choices
 def choice_input(choices,prompt = '> '):
     #loop forever
