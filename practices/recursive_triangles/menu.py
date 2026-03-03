@@ -44,4 +44,3 @@ def menu():
         done = input('> ').lower()
         if done == 'exit':
             return
-menu()
