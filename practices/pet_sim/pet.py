@@ -238,7 +238,7 @@ class pet:
         #if toy is not a rock
         if not toy == "rock":
             #tell user hapiness increased and boredom decreased
-            print("Hapiness increased!\nBoredom decreased!")
+            print(f"{self.name}'s hapiness increased!\n{self.name}'s boredom decreased!")
         #increase hapiness and boredom based on toy stats
         self.hapiness += toys[toy]['hapiness']
         self.boredom += toys[toy]['boredom']
