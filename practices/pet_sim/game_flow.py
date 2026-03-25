@@ -4,7 +4,6 @@ from time import sleep
 from pet import pet as pet_creator
 from data import *
 import random
-import json
 #time variable stores current hour (1-24) in game. Doing activities increases it. As time increases events occur that can cause decreases in resources, so you have to balance your time between obtaining different resources.
 time = 8
 #money stores how much in-game money you have. This is gained by working and spent on food for yourself and your pets, or toys for your pets to increase hapiness.
@@ -156,6 +155,7 @@ def menu():
                             chosen_food = food_list[int(chosen_food) - 1]
                             #run pet's "feed" method
                             pet.feed(chosen_food)
+                            account_data['food'].remove(chosen_food)
                             #advance time 2 hours
                             print('2 hours passed!')
                             sleep(1)
@@ -175,7 +175,7 @@ def menu():
                     #advance "store hours" by one
                     store_hours += 1
                     #ask them if they would like to buy a pet, buy an item, or leave
-                    print('What would you like to do?\n1. Buy Pet\n2. Buy Item\n3. Exit')
+                    print('What would you like to do?\n1. Buy Pet ($50)\n2. Buy Item\n3. Exit')
                     action = choice_input(['1','2','3'])
                     match action:
                         #if they want to buy a pet
@@ -199,7 +199,7 @@ def menu():
                             item_choices = range(1,len(items) + 1)
                             for item in item_choices:
                                 #display each item and its cost
-                                print(f'{item}. {items[item-1]} ({item_costs[items[item-1]]})')
+                                print(f'{item}. {items[item-1]} (${item_costs[items[item-1]]})')
                             choice = items[int(choice_input(stringify(item_choices))) - 1]
                             #if they have enough money for it
                             if account_data['money'] >= item_costs[choice]:
@@ -241,5 +241,3 @@ def menu():
                 save_data(user,account_data)
                 print('Data saved!')
                 break
-
-menu()
