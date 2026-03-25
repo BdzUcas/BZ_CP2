@@ -1,6 +1,7 @@
 import math
 from helper import *
 import random
+from formatting import f
 foods = {
     "kibble": {
         "hapiness": 0,
@@ -22,11 +23,11 @@ foods = {
         "hapiness": 30,
         "hunger": 0
     },
-    "birdseed": {
+    "seeds": {
         "hapiness": 0,
         "hunger": -20
     },
-    "high-quality bird seed": {
+    "high-quality seeds": {
         "hapiness": 20,
         "hunger": -40
     },
@@ -47,7 +48,7 @@ toys = {
         "generic": "plays with the stick!",
         "dog": "plays fetch with the stick!",
         "cat": "gnaws on the stick!",
-        "hampster": "looks at the stick!",
+        "hamster": "looks at the stick!",
         "rock": "sits next to the stick!"
     },
     "rope": {
@@ -57,7 +58,7 @@ toys = {
         "generic": "plays with the rope!",
         "dog": "plays tug with the rope!",
         "cat": "chases the rope!",
-        "hampster": "chases the rope!",
+        "hamster": "chases the rope!",
         "rock": "sits next to the rope!"
     },
     "sqeaky toy": {
@@ -67,8 +68,8 @@ toys = {
         "generic": "plays with the squaky toy!",
         "dog": "plays with the squeaky toy!",
         "cat": "plays with the squeaky toy!",
-        "hampster": "plays with the squeaky toy!",
-        "dog": "sits next to the squeaky toy!"
+        "hamster": "plays with the squeaky toy!",
+        "rock": "sits next to the squeaky toy!"
     },
     "frisbee": {
         "boredom": -30,
@@ -76,9 +77,9 @@ toys = {
         "durability": 0.2,
         "generic": "plays with the frisbee!",
         "dog": "plays fetch with the frisbee!",
-        "cat": "sits on top of the frisbee!",
-        "hampster": "runs around the frisbee!",
-        "dog": "sits next to the frisbee!"
+        "cat": "sits on top of the frisbee.",
+        "hamster": "runs around the frisbee!",
+        "rock": "sits next to the frisbee!"
     },
     "string": {
         "boredom": -10,
@@ -87,7 +88,7 @@ toys = {
         "generic": "plays with the string!",
         "dog": "eats the string!",
         "cat": "swats at the string!",
-        "hampster": "chases the string!",
+        "hamster": "chases the string!",
         "rock": "sits next to the string!"
     },
     "ball": {
@@ -97,7 +98,7 @@ toys = {
         "generic": "plays with the ball!",
         "dog": "plays fetch with the ball!",
         "cat": "rolls the ball around!",
-        "hampster": "runs inside the ball!",
+        "hamster": "runs inside the ball!",
         "rock": "sits next to the ball!"
     },
     "rock": {
@@ -107,35 +108,67 @@ toys = {
         "generic": "plays with the rock!",
         "dog": "tries to eat the rock!",
         "cat": "looks judgementally at the rock!",
-        "hampster": "sits on the rock!",
+        "hamster": "sits on the rock!",
         "rock": "is horrified!"
+    },
+    "self": {
+        "boredom": -10,
+        "hapiness": 10,
+        "durability": 0,
+        "generic": "plays with you!",
+        "dog": "plays chase with you!",
+        "cat": "tries to eat your fingers!",
+        "hamster": "crawls into your lap.",
+        "rock": "sits there."
     }
 }
 #generic pet class
 class pet:
     #init function
-    def __init__(self,name,age,hapiness):
+    def __init__(self,name,type,age_ticks,hunger,hapiness,boredom,diet,asleep,status):
         #initialize name, age (in weeks), age (in ticks (8 hour periods)), hunger, hapiness, boredom, preferred foods, and animal type
         self.name = name
-        self.age = age
-        self.age_ticks = age * 21
-        self.hunger = 0
+        self.age = age_ticks // 21
+        self.age_ticks = age_ticks
+        self.hunger = hunger
         self.hapiness = hapiness
-        self.boredom = 0
-        self.diet = []
-        self.type = "generic"
-        self.asleep = False
+        self.boredom = boredom
+        self.diet = diet
+        self.type = type
+        self.asleep = asleep
+        self.status = status
+    def status_update(self):
+        #don't let this method run if pet is dead
+        if self.status == 'dead':
+            return
+        if self.asleep:
+            self.status = f("gray","asleep")
+        elif self.hapiness <= 0:
+            self.status = f("red","sulking")
+        elif self.hunger > 50:
+            self.status =f("red","hungry")
+        elif self.boredom > 10:
+            self.status = f("red","bored")
+        else:
+            self.status = f("green","happy")
     #die function
     def die(self):
-        #delete object
-        del self
+        #set status to dead (prevents all interactions)
+        self.status = 'dead'
     #tick function (happens every 8 hours)
     def tick(self):
+        #variable to track if something actually happened
+        event = False
+        #don't let this method run if pet is dead
+        if self.status == 'dead':
+            return
         #if pet is asleep
         if self.asleep:
+            event = True
             #wake pet up and return
             print(f'{self.name} woke up!')
             self.asleep = False
+            input(f('green','press ENTER to continue >'))
             return
         costs = 0
         #increase pet age
@@ -147,14 +180,16 @@ class pet:
         self.boredom += 10
         #if pet hunger went over 100%
         if self.hunger > 100:
+            event = True
             #tell the user their pet starved to death
             print(f"{self.name} has starved to death!")
             #kill the pet
             self.die()
-        #if the boredom is over 10%
-        if self.boredom > 10:
+        #if the boredom is over 20%
+        if self.boredom > 20:
             #50% chance for a random event to happen
             if chance(0.5):
+                event = True
                 #choose a random event
                 event = random.choice(['self_play','wander','trouble'])
                 match event:
@@ -194,6 +229,7 @@ class pet:
                         costs += 10
         #if hapiness is less than or equal to zero
         if self.hapiness <= 0:
+            event = True
             #set hapiness to 0
             self.hapiness = 0
             #tell the user their pet is sulking
@@ -201,10 +237,17 @@ class pet:
             print(f"{self.name}'s boredom increased.")
             #increase boredom
             self.boredom += 10
+        if event:
+            input(f('green','press ENTER to continue >'))
         #return costs
         return costs
     #feed method
     def feed(self, food):
+        #don't let this method run if pet is dead
+        if self.status == 'dead':
+            print(f'You can\'t feed a dead {self.type}!')
+            input(f('green','press ENTER to continue >'))
+            return
         #if the food is not a food for that pet
         if not food in self.diet:
             #tell the user the pet rejects the food
@@ -233,6 +276,11 @@ class pet:
             self.hunger += foods[food]["hunger"]
     #play method
     def play(self, toy):
+        #don't let this method run if pet is dead
+        if self.status == 'dead':
+            print(f'You can\'t play with a dead {self.type}!')
+            input(f('green','press ENTER to continue >'))
+            return
         #display message (i.e. Rufus plays fetch with the frisbee!)
         print(f"{self.name} {toys[toy][self.type]}")
         #if toy is not a rock

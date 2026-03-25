@@ -1,5 +1,9 @@
 import random
 
+def stringify(list):
+    #turn every item in the given list into a string
+    return [str(i) for i in list]
+
 #random chance based on chance given
 def chance(chance):
     if random.random() <= chance:

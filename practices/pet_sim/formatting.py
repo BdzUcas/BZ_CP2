@@ -20,3 +20,24 @@ def f(format, text = ''):
         return formatters[format] + text + "\033[0m"
     except:
         return
+    
+def ftime(time):
+    day = time / 24
+    week = time // 7
+    weekday = week % 7
+    hour = time % 24
+    american_time = hour % 12
+    if hour > 11:
+        am_pm = "PM"
+    else:
+        am_pm = "AM"
+    weekdays = {
+        1: "Monday",
+        2: "Tuesday",
+        3: "Wednesday",
+        4: "Thursday",
+        5: "Friday",
+        6: "Saturday",
+        7: "Sunday"
+    }
+    return f"{american_time}:00 {am_pm} {weekdays[weekday]}, Week {week}"
