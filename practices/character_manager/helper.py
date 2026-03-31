@@ -191,8 +191,13 @@ def uniprint(to_print, indentation = ''):
                 uniprint(to_print[key.capitalize().replace('_',' ')],indentation + ' ')
 
 #choice from a list
-def list_choice(choices,prompt = 'Choose an option:'):
-    choices = stringify(choices)
+def list_choice(raw_choices,prompt = 'Choose an option:'):
+    #if the list is empty
+    if not raw_choices:
+        #tell the user and return
+        print('No items to display!')
+        return
+    choices = stringify(raw_choices)
     #print prompt
     print(prompt)
     #create a list with a number for each choice
@@ -206,8 +211,10 @@ def list_choice(choices,prompt = 'Choose an option:'):
     #if it was a number assigned to an item
     if chosen in stringify(choice_ints):
         #return the item that number was assigned to
-        return choices[int(chosen) - 1]
+        return raw_choices[int(chosen) - 1]
     #otherwise
     else:
-        #return what they chose
-        return chosen
+        #get the index in choices of what they chose
+        index = choices.index(chosen)
+        #return the relevant item in raw_choices (unlowered)
+        return raw_choices[index]

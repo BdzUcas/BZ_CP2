@@ -45,6 +45,11 @@ class Fighter:
         self.lvl = xp_to_level(self.xp)
         if self.lvl > prev_lvl:
             print(f'{f('red',self.name)} leveled up to level {f('red',self.lvl)}!')
+            gained_lvls = self.lvl - prev_lvl
+            self.atk += gained_lvls
+            self.block += gained_lvls
+            self.max_hp += gained_lvls * 10
+            self.hp = self.max_hp
     #take damage method
     def hurt(self,damage):
         #block stat is subtracted from damage

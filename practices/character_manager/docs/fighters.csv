@@ -1,2 +1,25 @@
-name,char_class,max_hp,atk,block,xp,owner
-example,warrior,100,0,1000,0,Admin
+name,char_class,max_hp,hp,atk,block,xp,lvl,owner
+example,warrior,100,100,0,1000,1000000000,30,Admin
+Jeff,wizard,21,21,5,3,1,0,bdz
+Yur mom,archer,25,25,5,3,0,0,hi
+,warrior,20,20,6,2,0,0,alkdjfslkd
+"Ragnarok, destroyer of lamps",wizard,22,22,5,1,0,0,",,"
+A random cat,warrior,59,59,8,6,8,3,you?
+Blame Nathan,wizard,46,46,8,4,3,2,bdz
+On top of spaghetti,archer,24,24,3,5,0,0,all covered with cheese
+You're,wizard,24,24,5,3,0,0,a
+Overhand bowling champions,warrior,23,23,6,4,0,0,best band names
+Screaming hairy armadillos,archer,24,24,5,3,0,0,best band names
+Iron Man,wizard,27,27,6,2,0,0,starlord300
+The Incredible Hulk,warrior,49,49,8,5,3,2,starlord300
+Rocket,archer,28,28,5,4,0,0,starlord300
+Harry Potter,wizard,28,28,7,3,0,0,jkrowling8937
+Perry Hotter,warrior,22,22,5,4,0,0,jkrowling8937
+"No more rhymes now, i mean it!",archer,20,20,3,4,0,0,anybody wanna peanut?
+SIMBAAAAAA,warrior,29,29,6,4,0,0,hakunamatata
+Wizzor,wizard,29,29,7,1,0,0,the magic chicken
+Smit Passon,archer,22,22,3,3,0,0,the magic chicken
+ENTER,warrior,22,22,5,2,0,0,sike
+Touch grass,warrior,22,22,6,2,1,0,life advice for gamers
+Stay Hydrated,wizard,43,43,7,4,3,2,life advice for gamers
+Throw yourself at the ground... and miss,wizard,30,30,6,1,0,0,life advice for gamers
