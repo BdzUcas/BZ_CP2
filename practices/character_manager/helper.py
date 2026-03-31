@@ -1,32 +1,3 @@
-# This is a library of helpful functions made by BDZ.
-# Anyone is welcome to use any of them for any purpose.
-# Here's a quick overview of all of them:
-# Hit alt+z to wrap text and make this actually readable
-# btw please read f(), choice_input(), int_input(), and list_choice() because they are UNBELIEVABLY useful. I use them all the time. Please do yourself a favor and read them.
-
-# f() takes two arguments, one for a format and the second for text. It returns the text with the given format, and defaults to an empty string if no text is provided. Formats can be colors like "gray" or "blue" or a couple special ones like "clear" to clear the screen or "###" to print a gray triple #
-
-# uinput() takes a user input in a pretty way, strips it, and converts it to lowercase.
-
-# stringify() takes any list and converts it entirely to strings. Somewhat useful for generating lists of number strings with range. It also lowers all items.
-
-# chance() takes a float between 0 and 1 and returns true x percent of the time. so 0.25 would be a 25% chance to return true
-
-# choice_input() is probably the most useful. It takes a list of strings as the first argument and a prompt as the second (optional), and an error message as the third input (optional). It takes a user inputs until the input matches one of the items in the list. So if you wanted the user to pick a number from 1-4, you could say choice_input([1,2,3,4],"Pick a number from 1-4: "). It automatically lowers the input, so don't put in options with uppercase letters, and stringifies the list (so numbers are okay in the list, as they'll be converted to strings). The optional third argument is an error message to be displayed if the input does not match something from the list.
-
-# int_input() is similar to choice input, but doesn't take the first argument. Instead, it only accepts inputs that can be converted to a float (ie 1, 7.6, -12 would all be valid). It automatically converts it to a float for you. It also accepts an optional max and min argument.(min defaults to 0). Arguments in order are: prompt, error, max, min. All are optional
-
-# csv_to_dictionary accepts the file path to a csv file and returns a list of dictionaries with the content of the csv. Pretty self explanatory.
-
-# save_csv() is the opposite of csv_to_dictionary(), it takes a dictionary as the first argument and a file path as the second.
-
-# uniprint accepts anything. ANYTHING. and it pretty prints it. You could nest tuples in sets in dictionaries in dictionaries full of floats, integers, whatever. It will print it with coloring and indentation.
-
-# search() takes a list of dictionaries (such as from csv_to_dictionary()) and asks the user for a prompt. Then it returns a list of all the dictionaries that contain that prompt in any of their values.
-
-# list_choice() is incredibly useful. It accepts a list and prompt and prints the prompt, then each item in the list with a number assigned. Then it asks the user for a choice, which can be a number assigned to a choice or one of the choices. It returns what they chose. Super useful for making menus, to make a menu where the user picks between search, add, or quit you would use just this one line of code: choice = list_input(['search','add','quit'],'What would you like to do?')
-
-
 import random
 import csv
 
@@ -49,7 +20,7 @@ def f(format, text = ''):
         "bright red": "\033[91m"
     }
     try:
-        return formatters[format] + text + "\033[0m"
+        return formatters[format] + str(text) + "\033[0m"
     except:
         return text
     
@@ -176,7 +147,7 @@ def search(dictionaries):
                 #break loop
                 break
             #if current feild of current dictionary contains query:
-            if query in dic[feild].lower():
+            if query in str(dic[feild]).lower():
                 #add current dictionary to potential dictionaries
                 potential.append(dic)
     #return potentials
@@ -187,10 +158,13 @@ def search(dictionaries):
 def uniprint(to_print, indentation = ''):
     #get type of thing to print
     method = type(to_print)
-    #if it is an integer, float, or string
-    if method is int or method is str or method is float:
+    #if it is an integer or float
+    if method is int or method is float:
         #print it
         print(indentation + to_print)
+    elif method is str:
+        #print it, removing underscores and capitalizing it
+        print(indentation + to_print.capitalize().replace('_',' '))
     #if it is a list, tuple, or set
     elif method is list or method is tuple or method is set:
         #loop through it
@@ -208,13 +182,13 @@ def uniprint(to_print, indentation = ''):
             #if value is a string, float, or integer:
             if nest_method is int or nest_method is str or nest_method is float:
                 #print the key and a colon followed by the value
-                print(f'{indentation}{key}: \033[34m{to_print[key]}\033[0m')
+                print(f'{indentation}{key.capitalize().replace('_',' ')}: \033[34m{to_print[key]}\033[0m')
             #otherwise:
             else:
                 #print the key and a colon
                 print(f'{indentation}{key}:')
                 #uniprint value
-                uniprint(to_print[key],indentation + ' ')
+                uniprint(to_print[key.capitalize().replace('_',' ')],indentation + ' ')
 
 #choice from a list
 def list_choice(choices,prompt = 'Choose an option:'):
