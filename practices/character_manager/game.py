@@ -2,6 +2,7 @@ from fighter import Fighter
 import random as r
 from time import sleep
 from helper import f
+#classes dict
 classes = {
     "warrior": {
         "atk": 1,
@@ -16,19 +17,23 @@ classes = {
         "def": 2
     }
 }
+#game class
 class Game:
+    #initialize with dictionary of fighter objects
     def __init__(self,fighter_dicts):
         fighters = {}
         for f in fighter_dicts:
             fighter = Fighter(f['name'],f['char_class'],int(f['max_hp']),int(f['atk']),int(f['block']),int(f['xp']),f['owner'])
             fighters[f['name']] = fighter
         self.fighters = fighters
+    #add fighter method
     def add_fighter(self,user,name,char_class):
         hp = r.randint(20,30)
         atk = r.randint(3,5) + classes[char_class]['atk']
         block = r.randint(1,3) + classes[char_class]['def']
         fighter = Fighter(name,char_class,hp,atk,block,0,user)
         self.fighters[name] = (fighter)
+    #battle two fighters method
     def battle(self,fighter,challenger):
         round = 1
         while True:

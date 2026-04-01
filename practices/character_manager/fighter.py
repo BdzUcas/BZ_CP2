@@ -9,7 +9,9 @@ def xp_to_level(xp):
         if xp <= 2 ** i:
             return i
         i += 1
+#fighter class
 class Fighter:
+    #initialize with a name, class, max/current health, attack power, defense, xp and level, and owner
     def __init__(self,name,char_class,hp,atk,block,xp,owner):
         #name
         self.name = name

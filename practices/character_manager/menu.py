@@ -33,7 +33,9 @@ def menu():
         #ask user if they want to create a fighter, view their fighters, view global fighters, battle, or quit
         choice = list_choice(['create a fighter','view your fighters','view all fighters','battle','quit'])
         match choice:
+            #if they want to create a fighter
             case 'create a fighter':
+                #ask for a name and class
                 name = input("What is your character's name?\n> \033[34m")
                 print(f("white"),end='')
                 if name in game.fighters.keys():
@@ -49,35 +51,47 @@ def menu():
                 print(f('clear','Generating stats...'))
                 sleep(0.5)
                 print(f('clear'),end='')
+                #run the add fighter method
                 game.add_fighter(user,name,char_class)
+                #display created fighter
                 game.fighters[name].display()
                 input(f('green','press ENTER to return to menu > '))
                 continue
+            #if they want to view their fighters
             case 'view your fighters':
+                #make a list of their fighters
                 user_fighters = []
                 for fighter in game.fighters.values():
                     if fighter.owner == user:
                         user_fighters.append(fighter.name)
+                #show details on the one they pick
                 fighter = list_choice(user_fighters,'Enter a fighter to see details:')
                 if fighter:
                     print(f('clear'),end='')
                     game.fighters[fighter].display()
                 input(f('green','press ENTER to return to menu > '))
                 continue
+            #if they want to view all fighters
             case 'view all fighters':
+                #get all fighters as dictionaries and let them search through them
                 fighters = get_dicts(game.fighters.values())
                 potentials = search(fighters)
                 potential_names = [fighter['name'] for fighter in potentials]
+                #display all matching fighters and let them pick one to show details on
                 fighter = list_choice(potential_names)
                 if fighter:
                     game.fighters[fighter].display()
                 input(f('green','press ENTER to return to menu > '))
                 continue
+            #if they choose to quit
             case 'quit':
+                #save data and exit function
                 fighters = get_dicts(game.fighters.values())
                 save_csv(fighters,'practices/character_manager/docs/fighters.csv')
                 break
+            #if they want to battle
             case 'battle':
+                #ask them which fighter to battle with
                 fighters = list(game.fighters.values())
                 user_fighters = []
                 for fighter in fighters:
@@ -93,7 +107,7 @@ def menu():
                 sleep(0.5)
                 print(f('clear','Searching for a fighter your level...'))
                 sleep(0.5)
-                
+                #find a fighter that is the chosen fighters level, one below, or one higher
                 potentials = []
                 for challenger in fighters:
                     cr = challenger.lvl - game.fighters[fighter].lvl
@@ -107,6 +121,6 @@ def menu():
                 challenger = random.choice(potentials)
                 print(f("clear","Challenger:\n"))
                 game.fighters[challenger].display()
+                #battle the two fighters
                 input(f('green','\npress ENTER to start battle > '))
                 game.battle(fighter,challenger)
-menu()
