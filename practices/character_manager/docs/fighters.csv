@@ -1,11 +1,11 @@
 name,char_class,max_hp,hp,atk,block,xp,lvl,owner
 example,warrior,100,100,0,1000,1000000000,30,Admin
-Jeff,wizard,21,21,5,3,1,0,bdz
+Jeff,wizard,31,31,6,4,2,1,bdz
 Yur mom,archer,25,25,5,3,0,0,hi
 ,warrior,20,20,6,2,0,0,alkdjfslkd
 "Ragnarok, destroyer of lamps",wizard,22,22,5,1,0,0,",,"
 A random cat,warrior,59,59,8,6,8,3,you?
-Blame Nathan,wizard,46,46,8,4,3,2,bdz
+Blame Nathan,wizard,76,76,11,7,21,5,bdz
 On top of spaghetti,archer,24,24,3,5,0,0,all covered with cheese
 You're,wizard,24,24,5,3,0,0,a
 Overhand bowling champions,warrior,23,23,6,4,0,0,best band names
@@ -24,3 +24,5 @@ Touch grass,warrior,22,22,6,2,1,0,life advice for gamers
 Stay Hydrated,wizard,43,43,7,4,3,2,life advice for gamers
 Throw yourself at the ground... and miss,wizard,30,30,6,1,0,0,life advice for gamers
 e,archer,29,29,3,5,0,0,aldksfas;kdfjl;kdjsf;akldsf;lkjad;lfjsa;dflka;ldj;alkdsja/ldjsfljaskfljfl;lkjsfakjsf;aljsfdkfjskjd;fkajdf;ldsja;dajflkdjf;akljf;adlks;alfj;askdj;lkajdf;lakjsf;alkdjsf;lakdjf;alksfj;akdjsf;alkdjsf;alkdjsf;alkdjsf;alkjf;aldkjs;slkdjfa;alkdjsf;akdjsf;lkdjsaf;akldjf;lkdjsaf;lkjsadfhowlongcanoneusernamebe
+I'm,warrior,27,27,4,4,0,0,a
+:),warrior,27,20,6,4,1,0,magic

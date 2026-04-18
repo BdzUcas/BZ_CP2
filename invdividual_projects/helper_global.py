@@ -2,7 +2,7 @@
 # Anyone is welcome to use any of them for any purpose.
 # Here's a quick overview of all of them:
 # Hit alt+z to wrap text and make this actually readable
-# btw please read f(), choice_input(), int_input(), and list_choice() because they are UNBELIEVABLY useful. I use them all the time. Please do yourself a favor and read them.
+# btw if you are making a terminal-based program please read f(), choice_input(), int_input(), and list_choice() because they are UNBELIEVABLY useful. I use them all the time. Please do yourself a favor and read them.
 
 # f() takes two arguments, one for a format and the second for text. It returns the text with the given format, and defaults to an empty string if no text is provided. Formats can be colors like "gray" or "blue" or a couple special ones like "clear" to clear the screen or "###" to print a gray triple #
 
@@ -26,9 +26,10 @@
 
 # list_choice() is incredibly useful. It accepts a list and prompt and prints the prompt, then each item in the list with a number assigned. Then it asks the user for a choice, which can be a number assigned to a choice or one of the choices. It returns what they chose. Super useful for making menus, to make a menu where the user picks between search, add, or quit you would use just this one line of code: choice = list_input(['search','add','quit'],'What would you like to do?')
 
-
+# gui() texts a list of strings to display as lines of text and a list of strings to display as buttons. It will create a gui with a width and height that perfectly fits the displayed text and buttons. It returns the text on whichever button the user clicks.
 import random
 import csv
+from tkinter import *
 
 #text formatting function
 def f(format, text = ''):
@@ -237,3 +238,67 @@ def list_choice(choices,prompt = 'Choose an option:'):
     else:
         #return what they chose
         return chosen
+    
+
+
+#result class, used for passing information locally to globally
+class Result():
+    def __init__(self):
+        self.result = ''
+
+#gui function, for creating a menu with the given text and buttons
+def gui(text=['No text provided'],options=['continue'],fontsize=10,font='Helvetica',title_text='Menu',width=0,height=0):
+    #finds the longest bit of text out of the text and all the buttons
+    #find longest text
+    longest = 0
+    for line in text:
+        length = len(line)*fontsize*0.6
+        if length > longest:
+            longest = length
+    for i in options:
+        length = len(i)*fontsize*0.6
+        if length > longest:
+            longest = length
+    #if height is 0 (unset)
+    if height == 0:
+        #calculate height by amount of buttons and size of title and buttons
+        height = int(len(text)*fontsize*3 + len(options) * fontsize * 5)
+    #if width is 0 (unset)
+    if width == 0:
+        #calculate width based on longest text
+        width = int(longest) + 100
+    #create a screen
+    root = Tk()
+    root.title(title_text)
+    root.geometry(f'{width}x{height}')
+
+    #loop through the text
+    for line in text:
+        #create a label with the line of text, and place it on the screen
+        label = Label(root,text=line,font=(font,fontsize))
+        label.pack(pady=fontsize/2)
+    #create a Result object for storing what the user clicks on
+    result = Result()
+    #function that runs when a button is pushed
+    def button_push(result,text):
+        #set the result property of the given Result object to the text of the button
+        result.result = text
+        #kill the screen
+        root.destroy()
+    #make an empty list for the buttons
+    buttons = []
+    #loop through options
+    for option in options:
+        #make a button with given font and size that runs the button push function
+        button = Button(root,text=option,command = lambda option=option: button_push(result,option),font=(font,fontsize))
+        #add it to the buttons list
+        buttons.append(button)
+        #put it on the screen
+        button.pack(pady=fontsize/2)
+    #run the screen
+    root.mainloop()
+    #return the result property of the Result object
+    return result.result
+
+
+print(gui(['Hello','world','this','is some text'],['this is a button','this is also a button','this is too!','This is a button with a lot of text. I made it to test that the width properly scales with the length of the longest line of text. This also includes the text that is above the buttons']))
